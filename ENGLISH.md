@@ -36,7 +36,7 @@ Jpa Quick Design
 ```
 * Repository
 ```java
-//JpaSpecificationExecutor 提供复杂查询
+//JpaSpecificationExecutor provideComplexQueries
 public interface UserRepository extends JpaRepository<User, String>, JpaSpecificationExecutor<User> {
     
 }
