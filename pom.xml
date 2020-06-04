@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.github.uinios</groupId>
     <artifactId>jpa-basic-spring-boot-starter</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.5</version>
     <name>jpa-basic-spring-boot-starter</name>
     <description>jpa-basic-spring-boot-starter</description>
     <url>https://github.com/uinios/jpa-basic-spring-boot-starter</url>

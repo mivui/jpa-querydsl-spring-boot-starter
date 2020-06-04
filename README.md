@@ -1,26 +1,25 @@
+
 # jpa-basic-spring-boot-starter
-[中文](./README.md) | [English](./ENGLISH.md)
-<br>
-<br>
-Jpa Quick Design
+[中文](./ZH_CN.md) | [English](./README.md)
+* Jpa Quick Design
 ### 使用
-1. 添加依赖
+1. addDependency
      ```xml
         <dependency>
             <groupId>com.github.uinios</groupId>
             <artifactId>jpa-basic-spring-boot-starter</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.5</version>
         </dependency>
       ```
-2. 示例
-* 实体类
+2. examples
+* entityClass
 ```java
          @Entity
          @Getter
          @Setter
          @DynamicInsert
          @DynamicUpdate
-         @Table(name = "sys_user")
+         @Table(name = "user")
          @JsonIgnoreProperties(ignoreUnknown = true, value = {"handler", "hibernateLazyInitializer"})
          public class User implements Serializable {
          
@@ -34,14 +33,14 @@ Jpa Quick Design
        }
        
 ```
-* 仓库
+* Repository
 ```java
-//JpaSpecificationExecutor 提供复杂查询
+//JpaSpecificationExecutor provideComplexQueries
 public interface UserRepository extends JpaRepository<User, String>, JpaSpecificationExecutor<User> {
     
 }
 ```
-* 服务
+* service
 ```java
 public interface UserService extends BaseService<User, String> {
 }
@@ -54,13 +53,14 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     
 }
 ```
-* 控制器
+* controller
+  * Provide Chinese and English by default, other languages ​​can be inherited and reconstructed
 ```java
 @Slf4j
 @RestController
 @RequestMapping("user")
 public class UserController extends BaseController<User, String> {
-    private static final String content = "用户管理";
+    private static final String content = "userManagement";
 
     protected UserController() {
         super(content);

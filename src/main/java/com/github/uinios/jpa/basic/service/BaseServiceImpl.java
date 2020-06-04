@@ -1,4 +1,4 @@
-package com.github.uinios.jpa.service;
+package com.github.uinios.jpa.basic.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+/**
+ * @param <T>  entity
+ * @param <ID> Primary key
+ * @author Jingle-Cat
+ */
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true, rollbackFor = Exception.class)
 public abstract class BaseServiceImpl<T, ID> implements BaseService<T, ID> {
 

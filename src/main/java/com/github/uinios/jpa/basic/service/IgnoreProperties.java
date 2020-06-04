@@ -1,4 +1,4 @@
-package com.github.uinios.jpa.service;
+package com.github.uinios.jpa.basic.service;
 
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -12,6 +12,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * @author Jingle-Cat
+ */
 public class IgnoreProperties {
     private IgnoreProperties() {
     }

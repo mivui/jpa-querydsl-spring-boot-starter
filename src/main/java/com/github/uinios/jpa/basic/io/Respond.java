@@ -1,4 +1,4 @@
-package com.github.uinios.jpa.io;
+package com.github.uinios.jpa.basic.io;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Objects;
 
-
+/**
+ * @author Jingle-Cat
+ */
 @Getter
 @Setter
 public class Respond {
@@ -74,7 +76,7 @@ public class Respond {
         return respond;
     }
 
-    public static Respond successContent(String message, String... contents) {
+    public static Respond success(String message, String... contents) {
         final Respond respond = new Respond();
         respond.setStatus(HttpStatus.OK.value());
         if (Objects.nonNull(message)) {
@@ -101,7 +103,7 @@ public class Respond {
         return respond;
     }
 
-    public static Respond failureContent(String message, String... contents) {
+    public static Respond failure(String message, String... contents) {
         final Respond respond = new Respond();
         respond.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         if (Objects.nonNull(message)) {

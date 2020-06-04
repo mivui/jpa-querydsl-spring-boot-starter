@@ -1,4 +1,4 @@
-package com.github.uinios.jpa.service;
+package com.github.uinios.jpa.basic.service;
 
 
 import java.util.Collection;
@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * @param <T>  entity
+ * @param <ID> Primary key
+ * @author Jingle-Cat
+ */
 public interface BaseService<T, ID> {
     /**
      * Paging query

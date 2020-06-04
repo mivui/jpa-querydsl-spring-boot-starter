@@ -1,8 +1,11 @@
-package com.github.uinios.jpa.service;
+package com.github.uinios.jpa.basic.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * @author Jingle-Cat
+ */
 @Getter
 @AllArgsConstructor
 public enum PageEnum {
