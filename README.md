@@ -2,7 +2,7 @@
 # jpa-basic-spring-boot-starter
 [中文](./ZH_CN.md) | [English](./README.md)
 * Jpa Quick Design
-### 使用
+### use
 1. addDependency
      ```xml
         <dependency>
@@ -41,6 +41,7 @@ public interface UserRepository extends JpaRepository<User, String>, JpaSpecific
 }
 ```
 * service
+  * provide single table curd operation
 ```java
 public interface UserService extends BaseService<User, String> {
 }
@@ -54,7 +55,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
 }
 ```
 * controller
-  * Provide Chinese and English by default, other languages ​​can be inherited and reconstructed
+  * use please see the source code baseController,The default restful provided.
+  * Provide Chinese and English by default, other languages ​​can be inherited and reconstructed.
 ```java
 @Slf4j
 @RestController

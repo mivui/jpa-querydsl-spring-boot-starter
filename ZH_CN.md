@@ -40,6 +40,7 @@ public interface UserRepository extends JpaRepository<User, String>, JpaSpecific
 }
 ```
 * 服务
+  * 提供单表CURD操作
 ```java
 public interface UserService extends BaseService<User, String> {
 }
@@ -52,6 +53,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
 }
 ```
 * 控制器
+  * 使用请查看源码BaseController提供的默认restful
 ```java
 @Slf4j
 @RestController
