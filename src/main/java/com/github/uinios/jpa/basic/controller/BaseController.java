@@ -2,7 +2,8 @@ package com.github.uinios.jpa.basic.controller;
 
 import com.github.uinios.jpa.basic.io.Respond;
 import com.github.uinios.jpa.basic.service.BaseService;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,9 @@ import java.util.Optional;
  * @author Jingle-Cat
  */
 
-@Slf4j
 public abstract class BaseController<T, ID> {
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private BaseService<T, ID> baseService;
@@ -54,9 +56,9 @@ public abstract class BaseController<T, ID> {
     }
 
     @PostMapping("save")
-    public Respond save(@RequestBody T entity) {
+    public Respond save(@RequestBody T record) {
         try {
-            T save = baseService.save(entity);
+            T save = baseService.save(record);
             if (Objects.nonNull(save)) {
                 return Respond.success("添加{}成功！", content);
             }
@@ -66,10 +68,10 @@ public abstract class BaseController<T, ID> {
         return Respond.failure("添加{}失败！", content);
     }
 
-    @PostMapping("batch/save")
-    public Respond save(@RequestBody List<T> entities) {
+    @PostMapping("saveInBatch")
+    public Respond saveInBatch(@RequestBody List<T> records) {
         try {
-            List<T> list = baseService.saveInBatch(entities);
+            List<T> list = baseService.saveInBatch(records);
             if (Objects.nonNull(list) && !list.isEmpty()) {
                 return Respond.success("批量添加{}成功！", content);
             }
@@ -80,9 +82,9 @@ public abstract class BaseController<T, ID> {
     }
 
     @PutMapping("update")
-    public Respond update(@RequestBody T entity, @RequestParam ID id) {
+    public Respond update(@RequestBody T record, @RequestParam ID id) {
         try {
-            T update = baseService.update(entity, id);
+            T update = baseService.update(record, id);
             if (Objects.nonNull(update)) {
                 return Respond.success("修改{}成功！", content);
             }
@@ -105,7 +107,7 @@ public abstract class BaseController<T, ID> {
         return Respond.failure("删除{}失败！", content);
     }
 
-    @DeleteMapping("batch/delete/{ids}")
+    @DeleteMapping("deleteInBatch/{ids}")
     public Respond deleteInBatch(@PathVariable ID[] ids) {
         try {
             if (Objects.nonNull(ids)) {

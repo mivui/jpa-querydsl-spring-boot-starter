@@ -1,7 +1,5 @@
 package com.github.uinios.jpa.basic.io;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 import java.util.Objects;
@@ -9,8 +7,6 @@ import java.util.Objects;
 /**
  * @author Jingle-Cat
  */
-@Getter
-@Setter
 public class Respond {
 
     private int status;
@@ -113,5 +109,29 @@ public class Respond {
         }
         respond.setMessage(message);
         return respond;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Object getJson() {
+        return json;
+    }
+
+    public void setJson(Object json) {
+        this.json = json;
+    }
+
+    public Object getMessage() {
+        return message;
+    }
+
+    public void setMessage(Object message) {
+        this.message = message;
     }
 }

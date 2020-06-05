@@ -20,26 +20,26 @@ public class IgnoreProperties {
     }
 
     /**
-     * 获取对象需要更新的字段
+     * get the fields that need to be updated
      *
-     * @return 将目标源中不为空的字段取出
+     * @return take out non empty fields in the target source
      */
     public static String[] ignoreProperties(Object object) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = Objects.requireNonNull(requestAttributes).getRequest();
         final Enumeration<String> parameterNames = request.getParameterNames();
-        //需要更新的字段
+        //fields that need to be updated
         Set<String> params = new HashSet<>();
         while (parameterNames.hasMoreElements()) {
             String paramName = parameterNames.nextElement();
             params.add(paramName);
         }
-        //获取后台进行设置参数的值
+        //get the background to set the value of the parameter
         BeanWrapper bean = new BeanWrapperImpl(object);
-        //获取属性（字段）的描述
+        //get a description of the property (field)
         PropertyDescriptor[] descriptors = bean.getPropertyDescriptors();
         for (PropertyDescriptor descriptor : descriptors) {
-            //获取字段的值
+            //get the value of a field
             Object value = bean.getPropertyValue(descriptor.getName());
             if (Objects.nonNull(value)) {
                 params.add(descriptor.getName());

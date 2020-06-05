@@ -8,7 +8,7 @@
         <dependency>
             <groupId>com.github.uinios</groupId>
             <artifactId>jpa-basic-spring-boot-starter</artifactId>
-            <version>1.0.5</version>
+            <version>1.3.5</version>
         </dependency>
       ```
 2. examples
