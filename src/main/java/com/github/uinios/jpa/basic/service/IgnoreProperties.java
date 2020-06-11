@@ -2,12 +2,8 @@ package com.github.uinios.jpa.basic.service;
 
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.beans.PropertyDescriptor;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -25,15 +21,8 @@ public class IgnoreProperties {
      * @return take out non empty fields in the target source
      */
     public static String[] ignoreProperties(Object object) {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = Objects.requireNonNull(requestAttributes).getRequest();
-        final Enumeration<String> parameterNames = request.getParameterNames();
         //fields that need to be updated
         Set<String> params = new HashSet<>();
-        while (parameterNames.hasMoreElements()) {
-            String paramName = parameterNames.nextElement();
-            params.add(paramName);
-        }
         //get the background to set the value of the parameter
         BeanWrapper bean = new BeanWrapperImpl(object);
         //get a description of the property (field)

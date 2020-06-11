@@ -7,9 +7,10 @@
         <dependency>
             <groupId>com.github.uinios</groupId>
             <artifactId>jpa-basic-spring-boot-starter</artifactId>
-            <version>1.3.5</version>
+            <version>1.5.1</version>
         </dependency>
       ```
+----------   
 2. 示例
 * 实体类
 ```java
@@ -32,19 +33,22 @@
        }
        
 ```
-* 仓库
+---------
+> 仓库
 ```java
 //JpaSpecificationExecutor 提供复杂查询
 public interface UserRepository extends JpaRepository<User, String>, JpaSpecificationExecutor<User> {
     
 }
 ```
-* 服务
+--------
+> 服务
   * 提供单表CURD操作
 ```java
 public interface UserService extends BaseService<User, String> {
 }
 ```
+--------
 ```java
 @Service
 @Slf4j
@@ -52,17 +56,27 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
     
 }
 ```
-* 控制器
-  * 使用请查看源码BaseController提供的默认restful
+-------
+> 测试
 ```java
-@Slf4j
-@RestController
-@RequestMapping("user")
-public class UserController extends BaseController<User, String> {
-    private static final String content = "用户管理";
+@SpringBootTest
+class MainApplicationTests {
 
-    protected UserController() {
-        super(content);
+    @Autowired
+    private UserService userService;
+
+    @Test
+    void contextLoads() {
+       User user = new User();
+       user.setLoginName("test");
+       user.setpPassword("test");
+
+       userService.save(user);
+
+       userService.page(1, 2,user);
+
+       userService.findById("test");
+       //...
     }
 }
 ```

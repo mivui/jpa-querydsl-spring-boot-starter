@@ -1,25 +1,25 @@
-
 # jpa-basic-spring-boot-starter
 [中文](./ZH_CN.md) | [English](./README.md)
 * Jpa Quick Design
 ### use
-1. addDependency
+1. Add dependency
      ```xml
         <dependency>
             <groupId>com.github.uinios</groupId>
             <artifactId>jpa-basic-spring-boot-starter</artifactId>
-            <version>1.3.5</version>
+            <version>1.5.1</version>
         </dependency>
       ```
+----------   
 2. examples
-* entityClass
+* Entity class
 ```java
          @Entity
          @Getter
          @Setter
          @DynamicInsert
          @DynamicUpdate
-         @Table(name = "user")
+         @Table(name = "sys_user")
          @JsonIgnoreProperties(ignoreUnknown = true, value = {"handler", "hibernateLazyInitializer"})
          public class User implements Serializable {
          
@@ -33,39 +33,51 @@
        }
        
 ```
-* Repository
+---------
+> Repository
 ```java
-//JpaSpecificationExecutor provideComplexQueries
+//JpaSpecificationExecutor Provide complex queries
 public interface UserRepository extends JpaRepository<User, String>, JpaSpecificationExecutor<User> {
     
 }
 ```
-* service
-  * provide single table curd operation
+--------
+> service
+  * Provide single table CURD operation
 ```java
 public interface UserService extends BaseService<User, String> {
 }
 ```
+--------
 ```java
 @Service
 @Slf4j
-@Transactional(propagation = Propagation.REQUIRED, readOnly = true, rollbackFor = Exception.class)
 public class UserServiceImpl extends BaseServiceImpl<User, String> implements UserService {
     
 }
 ```
-* controller
-  * use please see the source code baseController,The default restful provided.
-  * Provide Chinese and English by default, other languages ​​can be inherited and reconstructed.
+-------
+> Test
 ```java
-@Slf4j
-@RestController
-@RequestMapping("user")
-public class UserController extends BaseController<User, String> {
-    private static final String content = "userManagement";
+@SpringBootTest
+class MainApplicationTests {
 
-    protected UserController() {
-        super(content);
+    @Autowired
+    private UserService userService;
+
+    @Test
+    void contextLoads() {
+       User user = new User();
+       user.setLoginName("test");
+       user.setpPassword("test");
+
+       userService.save(user);
+
+       userService.page(1, 2,user);
+
+       userService.findById("test");
+       //...
     }
 }
 ```
+
