@@ -1,7 +1,7 @@
 # jpa-basic-spring-boot-starter
 [中文](./ZH_CN.md) | [English](./README.md)
 * Jpa Quick Design
-###简介
+### 简介
 * Jpa Service 封装,部份CRUD进行优化.
 ### 使用
 1. 添加依赖

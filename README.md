@@ -1,6 +1,8 @@
 # jpa-basic-spring-boot-starter
 [中文](./ZH_CN.md) | [English](./README.md)
 * Jpa Quick Design
+### Introduction
+* jpa service package some crud optimization
 ### use
 1. Add dependency
      ```xml
