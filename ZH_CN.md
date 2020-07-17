@@ -7,7 +7,7 @@
         <dependency>
             <groupId>com.github.uinios</groupId>
             <artifactId>jpa-basic-spring-boot-starter</artifactId>
-            <version>1.5.1</version>
+            <version>2.0.0.RELEASE</version>
         </dependency>
       ```
 ----------   
@@ -45,14 +45,14 @@ public interface UserRepository extends JpaRepository<User, String>, JpaSpecific
 > 服务
   * 提供单表CURD操作
 ```java
-public interface UserService extends BaseService<User, String> {
+public interface UserService extends JpaService<User, String> {
 }
 ```
 --------
 ```java
 @Service
 @Slf4j
-public class UserServiceImpl extends BaseServiceImpl<User, String> implements UserService {
+public class UserServiceImpl extends JpaServiceImpl<User, String> implements UserService {
     
 }
 ```
@@ -67,13 +67,13 @@ class MainApplicationTests {
 
     @Test
     void contextLoads() {
-       User user = new User();
-       user.setLoginName("test");
-       user.setpPassword("test");
+       User person = new User();
+       person.setLoginName("test");
+       person.setpPassword("test");
 
-       userService.save(user);
+       userService.save(person);
 
-       userService.page(1, 2,user);
+       userService.page(1, 2);
 
        userService.findById("test");
        //...

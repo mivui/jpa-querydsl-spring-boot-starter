@@ -1,7 +1,5 @@
-package com.github.uinios.jpa.basic.io;
+package com.github.uinios.jpa.io;
 
-
-import java.util.Objects;
 
 /**
  * Response result set
@@ -75,18 +73,6 @@ public class Respond {
         return respond;
     }
 
-    public static Respond success(String message, String... contents) {
-        final Respond respond = new Respond();
-        respond.setStatus(200);
-        if (Objects.nonNull(message)) {
-            for (String content : contents) {
-                message = message.replaceFirst("\\{}", content);
-            }
-        }
-        respond.setMessage(message);
-        return respond;
-    }
-
     public static Respond failure(Object message) {
         final Respond respond = new Respond();
         respond.setStatus(500);
@@ -99,18 +85,6 @@ public class Respond {
         respond.setStatus(500);
         respond.setMessage(message);
         respond.setJson(data);
-        return respond;
-    }
-
-    public static Respond failure(String message, String... contents) {
-        final Respond respond = new Respond();
-        respond.setStatus(500);
-        if (Objects.nonNull(message)) {
-            for (String content : contents) {
-                message = message.replaceFirst("\\{}", content);
-            }
-        }
-        respond.setMessage(message);
         return respond;
     }
 
