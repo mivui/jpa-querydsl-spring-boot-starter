@@ -14,30 +14,24 @@
 2. examples
 * Entity class
 ```java
-         @Entity
-         @Getter
-         @Setter
-         @DynamicInsert
-         @DynamicUpdate
-         @Table(name = "sys_user")
-         @JsonIgnoreProperties(ignoreUnknown = true, value = {"handler", "hibernateLazyInitializer"})
-         public class User implements Serializable {
-         
-             @Id
-             @GenericGenerator(name = "uuid2", strategy = "uuid2")
-             @GeneratedValue(generator = "uuid2")
-             @Column(columnDefinition = "char(36)")
-             private String userId;
-             private String loginName;
-             private String password;
-       }
-       
+@Table
+@Entity
+public class Contact  implements Serializable {
+
+   @Id
+   private Integer id;
+  
+   private Name name;
+  
+   private String notes;
+   
+   //getter setter ...   
+}
 ```
 ---------
 > Repository
 ```java
-//JpaSpecificationExecutor Provide complex queries
-public interface UserRepository extends JpaRepository<User, String>, JpaSpecificationExecutor<User> {
+public interface ContactRepository extends JpaRepository<Contact, Integer>{
     
 }
 ```
@@ -45,14 +39,13 @@ public interface UserRepository extends JpaRepository<User, String>, JpaSpecific
 > service
   * Provide single table CURD operation
 ```java
-public interface UserService extends JpaService<User, String> {
+public interface ContactService extends JpaService<Contact, Integer> {
 }
 ```
 --------
 ```java
 @Service
-@Slf4j
-public class UserServiceImpl extends JpaServiceImpl<User, String> implements UserService {
+public class  ContactServiceImpl extends JpaServiceImpl<Contact, Integer> implements UserService {
     
 }
 ```
@@ -63,19 +56,32 @@ public class UserServiceImpl extends JpaServiceImpl<User, String> implements Use
 class MainApplicationTests {
 
     @Autowired
-    private UserService userService;
+    private ContactService contactService;
 
     @Test
     void contextLoads() {
-       User person = new User();
-       person.setLoginName("test");
-       person.setpPassword("test");
+       //Insert
+       Contact contact = new Contact();
+       contact.setName("test");
+       contact.setNotes("test");
+       contactService.save(contact);
 
-       userService.save(person);
+       //Update
+       Contact contact = new Contact();
+       contact.setId(1);
+       contact.setName("example");
+       contact.setNotes("example");
+       contactService.update(contact);
 
-       userService.page(1, 2,person);
+       //Delete
+       contactService.deleteById(1);
 
-       userService.findById("test");
+       //BatchDeletion
+       contactService.deleteByIds(new Integer[]{1,2});
+
+       //Pagination
+       contactService.page(1, 2);
+
        //...
     }
 }

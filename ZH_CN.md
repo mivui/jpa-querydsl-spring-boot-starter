@@ -1,6 +1,8 @@
 # jpa-basic-spring-boot-starter
 [中文](./ZH_CN.md) | [English](./README.md)
 * Jpa Quick Design
+###简介
+* Jpa Service 封装,部份CRUD进行优化.
 ### 使用
 1. 添加依赖
      ```xml
@@ -14,30 +16,24 @@
 2. 示例
 * 实体类
 ```java
-         @Entity
-         @Getter
-         @Setter
-         @DynamicInsert
-         @DynamicUpdate
-         @Table(name = "sys_user")
-         @JsonIgnoreProperties(ignoreUnknown = true, value = {"handler", "hibernateLazyInitializer"})
-         public class User implements Serializable {
-         
-             @Id
-             @GenericGenerator(name = "uuid2", strategy = "uuid2")
-             @GeneratedValue(generator = "uuid2")
-             @Column(columnDefinition = "char(36)")
-             private String userId;
-             private String loginName;
-             private String password;
-       }
-       
+@Table
+@Entity
+public class Contact  implements Serializable {
+
+   @Id
+   private Integer id;
+  
+   private Name name;
+  
+   private String notes;
+   
+   //getter setter ...      
+}
 ```
 ---------
 > 仓库
 ```java
-//JpaSpecificationExecutor 提供复杂查询
-public interface UserRepository extends JpaRepository<User, String>, JpaSpecificationExecutor<User> {
+public interface ContactRepository extends JpaRepository<Contact, Integer>{
     
 }
 ```
@@ -45,14 +41,13 @@ public interface UserRepository extends JpaRepository<User, String>, JpaSpecific
 > 服务
   * 提供单表CURD操作
 ```java
-public interface UserService extends JpaService<User, String> {
+public interface ContactService extends JpaService<Contact, Integer> {
 }
 ```
 --------
 ```java
 @Service
-@Slf4j
-public class UserServiceImpl extends JpaServiceImpl<User, String> implements UserService {
+public class  ContactServiceImpl extends JpaServiceImpl<Contact, Integer> implements UserService {
     
 }
 ```
@@ -63,19 +58,32 @@ public class UserServiceImpl extends JpaServiceImpl<User, String> implements Use
 class MainApplicationTests {
 
     @Autowired
-    private UserService userService;
+    private ContactService contactService;
 
     @Test
     void contextLoads() {
-       User person = new User();
-       person.setLoginName("test");
-       person.setpPassword("test");
+       //新增
+       Contact contact = new Contact();
+       contact.setName("test");
+       contact.setNotes("test");
+       contactService.save(contact);
 
-       userService.save(person);
+       //更新
+       Contact contact = new Contact();
+       contact.setId(1);
+       contact.setName("example");
+       contact.setNotes("example");
+       contactService.update(contact);
 
-       userService.page(1, 2);
+       //删除
+       contactService.deleteById(1);
 
-       userService.findById("test");
+       //批量删除
+       contactService.deleteByIds(new Integer[]{1,2});
+
+       //分页
+       contactService.page(1, 2);
+
        //...
     }
 }
