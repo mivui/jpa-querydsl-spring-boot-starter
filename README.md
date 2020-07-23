@@ -39,7 +39,38 @@ public interface ContactRepository extends JpaRepository<Contact, Integer>{
 ```
 --------
 > service
-  * Provide single table CURD operation
+  * Provide single table CURD operation.
+  * Note: The provided updates and batch updates only support single tables. For complex updates, refer to the following example of EntityManager
+```java
+public class OrderManagement {
+
+    @PersistenceContext
+    private EntityManager em;
+
+    //...
+
+    public void updateOrder(Double oldAmount, Double newAmount) {
+        CriteriaBuilder cb = this.em.getCriteriaBuilder();
+
+        // create update
+        CriteriaUpdate<Order> update = cb.
+        createCriteriaUpdate(Order.class);
+
+        // set the root class
+        Root e = update.from(Order.class);
+
+        // set update and where clause
+        update.set("amount", newAmount);
+        update.where(cb.greaterThanOrEqualTo(e.get("amount"), oldAmount));
+
+        // perform update
+        this.em.createQuery(update).executeUpdate();
+    }
+
+    //...
+ 
+} 
+```    
 ```java
 public interface ContactService extends JpaService<Contact, Integer> {
 }
