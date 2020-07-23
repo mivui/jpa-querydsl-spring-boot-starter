@@ -1,4 +1,4 @@
-# jpa-basic-spring-boot-starter
+# jpa-service-spring-boot-starter
 [中文](./ZH_CN.md) | [English](./README.md)
 * Jpa Quick Design
 ### Introduction
