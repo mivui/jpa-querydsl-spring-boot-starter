@@ -1,4 +1,4 @@
-package com.github.uinios.jpa.exception;
+package com.github.uinio.jpa.exception;
 
 /**
  * Primary key not found exception

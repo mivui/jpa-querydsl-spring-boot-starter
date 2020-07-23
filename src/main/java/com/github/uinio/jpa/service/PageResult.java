@@ -1,4 +1,4 @@
-package com.github.uinios.jpa.service;
+package com.github.uinio.jpa.service;
 
 /**
  * @author Jingle-Cat

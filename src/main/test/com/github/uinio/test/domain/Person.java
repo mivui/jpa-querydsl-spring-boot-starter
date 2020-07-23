@@ -1,4 +1,4 @@
-package com.github.uinios.test.domain;
+package com.github.uinio.test.domain;
 
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;

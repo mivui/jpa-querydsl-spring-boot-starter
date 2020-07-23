@@ -1,8 +1,8 @@
-package com.github.uinios.test;
+package com.github.uinio.test;
 
-import com.github.uinios.jpa.utils.IdFieldUtils;
-import com.github.uinios.test.domain.Person;
-import com.github.uinios.test.domain.User;
+import com.github.uinio.jpa.utils.IdFieldUtils;
+import com.github.uinio.test.domain.Person;
+import com.github.uinio.test.domain.User;
 
 import java.util.ArrayList;
 import java.util.Optional;

@@ -7,9 +7,9 @@
 1. 添加依赖
      ```xml
         <dependency>
-            <groupId>com.github.uinios</groupId>
-            <artifactId>jpa-basic-spring-boot-starter</artifactId>
-            <version>2.0.0.RELEASE</version>
+            <groupId>com.github.uinio</groupId>
+            <artifactId>jpa-service-spring-boot-starter</artifactId>
+            <version>2.0.1.RELEASE</version>
         </dependency>
       ```
 ----------   

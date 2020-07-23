@@ -1,4 +1,4 @@
-package com.github.uinios.jpa.utils;
+package com.github.uinio.jpa.utils;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;

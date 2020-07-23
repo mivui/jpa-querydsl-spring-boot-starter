@@ -8,12 +8,12 @@
         <version>2.3.1.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.github.uinios</groupId>
-    <artifactId>jpa-basic-spring-boot-starter</artifactId>
-    <version>2.0.0.RELEASE</version>
-    <name>jpa-basic-spring-boot-starter</name>
-    <description>jpa-basic-spring-boot-starter</description>
-    <url>https://github.com/uinios/jpa-basic-spring-boot-starter</url>
+    <groupId>com.github.uinio</groupId>
+    <artifactId>jpa-service-spring-boot-starter</artifactId>
+    <version>2.0.1.RELEASE</version>
+    <name>jpa-service-spring-boot-starter</name>
+    <description>jpa-service-spring-boot-starter</description>
+    <url>https://github.com/uinio/jpa-service-spring-boot-starter</url>
 
     <licenses>
         <license>
@@ -24,19 +24,19 @@
 
     <developers>
         <developer>
-            <name>uinios</name>
-            <email>Jingle-Cat@qq.com</email>
+            <name>LvXiaoBu</name>
+            <email>lv_xiao_bu@qq.com</email>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:uinios/jpa-basic-spring-boot-starter.git</connection>
-        <developerConnection>scm:git:git@github.com:uinios/jpa-basic-spring-boot-starter.git</developerConnection>
-        <url>git@github.com:uinios/jpa-basic-spring-boot-starter.git</url>
+        <connection>scm:git:git@github.com:uinio/jpa-service-spring-boot-starter.git</connection>
+        <developerConnection>scm:git:git@github.com:uinio/jpa-service-spring-boot-starter.git</developerConnection>
+        <url>git@github.com:uinio/jpa-service-spring-boot-starter.git</url>
     </scm>
     <issueManagement>
         <system>Github Issue</system>
-        <url>https://github.com/uinios/jpa-basic-spring-boot-starter/issues</url>
+        <url>https://github.com/uinio/jpa-service-spring-boot-starter/issues</url>
     </issueManagement>
 
     <properties>

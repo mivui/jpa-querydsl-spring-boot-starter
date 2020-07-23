@@ -1,7 +1,7 @@
-package com.github.uinios.jpa.service;
+package com.github.uinio.jpa.service;
 
-import com.github.uinios.jpa.exception.JpaServiceException;
-import com.github.uinios.jpa.utils.EntityUtils;
+import com.github.uinio.jpa.utils.EntityUtils;
+import com.github.uinio.jpa.exception.JpaServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,8 +19,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.github.uinios.jpa.utils.IdFieldUtils.getIdFieldName;
-import static com.github.uinios.jpa.utils.IdFieldUtils.getIdFieldValue;
+import static com.github.uinio.jpa.utils.IdFieldUtils.getIdFieldName;
+import static com.github.uinio.jpa.utils.IdFieldUtils.getIdFieldValue;
 
 
 /**

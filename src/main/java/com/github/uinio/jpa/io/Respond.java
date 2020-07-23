@@ -1,4 +1,4 @@
-package com.github.uinios.jpa.io;
+package com.github.uinio.jpa.io;
 
 
 /**

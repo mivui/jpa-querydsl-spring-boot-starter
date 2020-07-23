@@ -1,6 +1,6 @@
-package com.github.uinios.jpa.utils;
+package com.github.uinio.jpa.utils;
 
-import com.github.uinios.jpa.exception.JpaServiceException;
+import com.github.uinio.jpa.exception.JpaServiceException;
 import org.springframework.beans.BeanWrapperImpl;
 
 import javax.persistence.Id;

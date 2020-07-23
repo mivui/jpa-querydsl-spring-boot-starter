@@ -1,4 +1,4 @@
-package com.github.uinios.test.domain;
+package com.github.uinio.test.domain;
 
 public class User extends Person {
 
