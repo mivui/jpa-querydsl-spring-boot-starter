@@ -1,7 +1,7 @@
 package com.github.uinio.jpa.service;
 
-import com.github.uinio.jpa.utils.EntityUtils;
 import com.github.uinio.jpa.exception.JpaServiceException;
+import com.github.uinio.jpa.utils.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
@@ -37,13 +40,17 @@ public abstract class JpaServiceImpl<T, ID> implements JpaService<T, ID> {
     private final Class<T> clazz;
 
     public JpaServiceImpl() {
-        Type type = this.getClass().getGenericSuperclass();
-        Type[] types = (( ParameterizedType ) type).getActualTypeArguments();
+        ParameterizedType parameterizedType = ( ParameterizedType ) this.getClass().getGenericSuperclass();
+        Type[] types = parameterizedType.getActualTypeArguments();
         clazz = ( Class<T> ) types[0];
     }
 
-    @Autowired
     private JpaRepository<T, ID> jpaRepository;
+
+    @Autowired
+    public void setJpaRepository(final JpaRepository<T, ID> jpaRepository) {
+        this.jpaRepository = jpaRepository;
+    }
 
     @PersistenceContext
     protected EntityManager entityManager;
@@ -75,14 +82,10 @@ public abstract class JpaServiceImpl<T, ID> implements JpaService<T, ID> {
             CriteriaUpdate<T> update = builder.createCriteriaUpdate(clazz);
             Root<T> root = update.from(clazz);
             Map<String, Object> properties = EntityUtils.getProperties(entity);
-            properties.forEach((name, value) -> {
-                Path<Object> path = root.get(name);
-                update.set(path, value);
-            });
+            properties.forEach((name, value) -> update.set(root.get(name), value));
             Optional<Object> idFieldValue = getIdFieldValue(entity, idFieldName.get());
             if (idFieldValue.isPresent()) {
-                Path<Object> idPath = root.get(idFieldName.get());
-                update.where(builder.equal(idPath, idFieldValue.get()));
+                update.where(builder.equal(root.get(idFieldName.get()), idFieldValue.get()));
                 return entityManager.createQuery(update).executeUpdate();
             } else {
                 throw new JpaServiceException("The primary key cannot be null");
