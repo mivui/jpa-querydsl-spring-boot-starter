@@ -40,7 +40,7 @@ public interface ContactRepository extends JpaRepository<Contact, Integer>{
 --------
 > 服务
   * 提供单表CURD操作
-  * 注意:提供JpaService仅支持单表,复杂操作使用EntityManager或者QueryDsl
+  * 注意:提供的JpaService仅支持单表操作,复杂操作使用EntityManager或者QueryDsl
 ```java
 public interface ContactService extends JpaService<Contact, Integer> {
 }
