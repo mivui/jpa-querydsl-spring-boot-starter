@@ -40,37 +40,7 @@ public interface ContactRepository extends JpaRepository<Contact, Integer>{
 --------
 > 服务
   * 提供单表CURD操作
-  * 注意:提供的更新和批量更新只支持单表,复杂更新参考EntityManager以下简单示例
-```java
-public class OrderManagement {
-
-    @PersistenceContext
-    private EntityManager em;
-
-    //...
-
-    public void updateOrder(Double oldAmount, Double newAmount) {
-        CriteriaBuilder cb = this.em.getCriteriaBuilder();
-
-        // create update
-        CriteriaUpdate<Order> update = cb.
-        createCriteriaUpdate(Order.class);
-
-        // set the root class
-        Root e = update.from(Order.class);
-
-        // set update and where clause
-        update.set("amount", newAmount);
-        update.where(cb.greaterThanOrEqualTo(e.get("amount"), oldAmount));
-
-        // perform update
-        this.em.createQuery(update).executeUpdate();
-    }
-
-    //...
- 
-} 
-```  
+  * 注意:提供JpaService仅支持单表,复杂操作使用EntityManager或者QueryDsl
 ```java
 public interface ContactService extends JpaService<Contact, Integer> {
 }
