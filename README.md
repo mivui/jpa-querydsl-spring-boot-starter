@@ -2,7 +2,7 @@
 [中文](./ZH_CN.md) | [English](./README.md)
 * Jpa Quick Design
 ### Introduction
-* jpa service package some crud optimization
+* jpa service package some crud optimization.Support querydsl, just configure maven plugin generation.
 ### use
 1. Add dependency
      ```xml

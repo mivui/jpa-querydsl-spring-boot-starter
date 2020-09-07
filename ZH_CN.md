@@ -2,7 +2,7 @@
 [中文](./ZH_CN.md) | [English](./README.md)
 * Jpa Quick Design
 ### 简介
-* Jpa Service 封装,部份CRUD进行优化.
+* Jpa Service 封装,部份CRUD进行优化.支持querydsl,只需配置maven plugin生成即可
 ### 使用
 1. 添加依赖
      ```xml
