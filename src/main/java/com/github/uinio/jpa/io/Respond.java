@@ -9,106 +9,46 @@ package com.github.uinio.jpa.io;
 
 public class Respond {
 
-    private Respond() {
+    private final int status;
+
+    private final Object json;
+
+    private final String message;
+
+    public Respond(int status, String message, Object json) {
+        this.status = status;
+        this.json = json;
+        this.message = message;
     }
 
-    private int status;
-
-    private Object json;
-
-    private Object message;
-
     //200
-    public static Respond ok(Object message) {
-        Respond respond = new Respond();
-        respond.setStatus(200);
-        respond.setMessage(message);
-        return respond;
+    public static Respond ok(String message) {
+        return new Respond(200, message, null);
     }
 
     //401
-    public static Respond unAuthorized(Object message) {
-        Respond respond = new Respond();
-        respond.setStatus(401);
-        respond.setMessage(message);
-        return respond;
+    public static Respond unAuthorized(String message) {
+        return new Respond(401, message, null);
     }
 
     //403
-    public static Respond forbidden(Object message) {
-        Respond respond = new Respond();
-        respond.setStatus(403);
-        respond.setMessage(message);
-        return respond;
-    }
-
-    //404
-    public static Respond notFound(Object message) {
-        Respond respond = new Respond();
-        respond.setStatus(404);
-        respond.setMessage(message);
-        return respond;
-    }
-
-    //500
-    public static Respond error(Object message) {
-        Respond respond = new Respond();
-        respond.setStatus(500);
-        respond.setMessage(message);
-        return respond;
+    public static Respond forbidden(String message) {
+        return new Respond(403, message, null);
     }
 
     public static Respond success(Object data) {
-        final Respond respond = new Respond();
-        respond.setStatus(200);
-        respond.setJson(data);
-        return respond;
+        return new Respond(200, null, data);
     }
 
-    public static Respond success(Object message, Object data) {
-        final Respond respond = new Respond();
-        respond.setStatus(200);
-        respond.setMessage(message);
-        respond.setJson(data);
-        return respond;
+    public static Respond success(String message, Object data) {
+        return new Respond(200, message, data);
     }
 
-    public static Respond failure(Object message) {
-        final Respond respond = new Respond();
-        respond.setStatus(500);
-        respond.setMessage(message);
-        return respond;
+    public static Respond failure(String message) {
+        return new Respond(500, message, null);
     }
 
-    public static Respond failure(Object message, Object data) {
-        final Respond respond = new Respond();
-        respond.setStatus(500);
-        respond.setMessage(message);
-        respond.setJson(data);
-        return respond;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public Object getJson() {
-        return json;
-    }
-
-    public void setJson(Object json) {
-        this.json = json;
-    }
-
-    public Object getMessage() {
-        return message;
-    }
-
-    public void setMessage(Object message) {
-        this.message = message;
+    public static Respond failure(String message, Object data) {
+        return new Respond(500, message, data);
     }
 }
