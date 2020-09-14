@@ -64,33 +64,41 @@ public abstract class JpaServiceImpl<T, ID> implements JpaService<T, ID> {
     @Override
     @Transactional
     public T save(T entity) {
-        return jpaRepository.save(entity);
+        if (Objects.nonNull(entity)) {
+            return jpaRepository.save(entity);
+        }
+        return null;
     }
 
     @Override
     @Transactional
     public List<T> saveAll(Iterable<T> entities) {
-        return jpaRepository.saveAll(entities);
+        if (Objects.nonNull(entities) && entities.iterator().hasNext()) {
+            return jpaRepository.saveAll(entities);
+        }
+        return null;
     }
 
     @Override
     @Transactional
     public int update(T entity) {
-        Optional<String> idFieldName = getIdFieldName(clazz);
-        if (idFieldName.isPresent()) {
-            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-            CriteriaUpdate<T> update = builder.createCriteriaUpdate(clazz);
-            Root<T> root = update.from(clazz);
-            Map<String, Object> properties = EntityUtils.getProperties(entity);
-            properties.forEach((name, value) -> update.set(root.get(name), value));
-            Optional<Object> idFieldValue = getIdFieldValue(entity, idFieldName.get());
-            if (idFieldValue.isPresent()) {
-                update.where(builder.equal(root.get(idFieldName.get()), idFieldValue.get()));
-                return entityManager.createQuery(update).executeUpdate();
-            } else {
-                throw new JpaServiceException("The primary key cannot be null");
-            }
+        if (Objects.nonNull(entity)) {
+            Optional<String> idFieldName = getIdFieldName(clazz);
+            if (idFieldName.isPresent()) {
+                CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+                CriteriaUpdate<T> update = builder.createCriteriaUpdate(clazz);
+                Root<T> root = update.from(clazz);
+                Map<String, Object> properties = EntityUtils.getProperties(entity);
+                properties.forEach((name, value) -> update.set(root.get(name), value));
+                Optional<Object> idFieldValue = getIdFieldValue(entity, idFieldName.get());
+                if (idFieldValue.isPresent()) {
+                    update.where(builder.equal(root.get(idFieldName.get()), idFieldValue.get()));
+                    return entityManager.createQuery(update).executeUpdate();
+                } else {
+                    throw new JpaServiceException("The primary key cannot be null");
+                }
 
+            }
         }
         return 0;
     }
@@ -119,8 +127,9 @@ public abstract class JpaServiceImpl<T, ID> implements JpaService<T, ID> {
     public void deleteById(ID id) {
         if (Objects.isNull(id)) {
             throw new JpaServiceException("The primary key cannot be null");
+        } else {
+            jpaRepository.deleteById(id);
         }
-        jpaRepository.deleteById(id);
     }
 
     @Override
@@ -128,15 +137,16 @@ public abstract class JpaServiceImpl<T, ID> implements JpaService<T, ID> {
     public int deleteByIds(ID[] ids) {
         if (Objects.isNull(ids)) {
             throw new JpaServiceException("The primary key cannot be null");
-        }
-        Optional<String> idFieldName = getIdFieldName(clazz);
-        if (idFieldName.isPresent()) {
-            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-            CriteriaDelete<T> delete = builder.createCriteriaDelete(clazz);
-            Root<T> root = delete.from(clazz);
-            List<ID> idList = Stream.of(ids).collect(Collectors.toList());
-            delete.where(root.get(idFieldName.get()).in(idList));
-            return entityManager.createQuery(delete).executeUpdate();
+        } else {
+            Optional<String> idFieldName = getIdFieldName(clazz);
+            if (idFieldName.isPresent()) {
+                CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+                CriteriaDelete<T> delete = builder.createCriteriaDelete(clazz);
+                Root<T> root = delete.from(clazz);
+                List<ID> idList = Stream.of(ids).collect(Collectors.toList());
+                delete.where(root.get(idFieldName.get()).in(idList));
+                return entityManager.createQuery(delete).executeUpdate();
+            }
         }
         return 0;
     }
