@@ -15,10 +15,22 @@ public class Respond {
 
     private final String message;
 
-    public Respond(int status, String message, Object json) {
+    private Respond(int status, String message, Object json) {
         this.status = status;
         this.json = json;
         this.message = message;
+    }
+
+    public static Respond respond() {
+        return new Respond(200, null, null);
+    }
+
+    public static Respond respond(int status, Object data) {
+        return new Respond(status, null, data);
+    }
+
+    public static Respond respond(int status, String message, Object data) {
+        return new Respond(status, message, data);
     }
 
     //200
@@ -51,4 +63,5 @@ public class Respond {
     public static Respond failure(String message, Object data) {
         return new Respond(500, message, data);
     }
+
 }
