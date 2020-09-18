@@ -3,6 +3,7 @@ package com.github.uinio.jpa.service;
 
 import org.springframework.data.domain.Pageable;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,17 +34,19 @@ public interface JpaService<T, ID> {
      *
      * @see org.springframework.data.repository.CrudRepository#saveAll(Iterable)
      */
-    List<T> saveAll(Iterable<T> entities);
+    List<T> saveAll(Collection<T> entities);
 
     /**
      * Update based on primary key Only support single table update
+     * @return
      */
-    int update(T entity);
+    Integer update(T entity);
 
     /**
      * updateAll Only support single table update
+     * @return
      */
-    int updateAll(List<T> entities);
+    Integer updateAll(Collection<T> entities);
 
     /**
      * (non-Javadoc)
@@ -87,7 +90,7 @@ public interface JpaService<T, ID> {
      *
      * @see org.springframework.data.jpa.repository.JpaRepository#findAllById(Iterable)
      */
-    List<T> findAllById(Iterable<ID> ids);
+    List<T> findAllById(Collection<ID> ids);
 
     /**
      * (non-Javadoc)

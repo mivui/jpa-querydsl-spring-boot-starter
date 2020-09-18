@@ -1,15 +1,15 @@
 # jpa-service-spring-boot-starter
-[中文](./ZH_CN.md) | [English](./README.md)
+中文 | [English](./README.md)
 * Jpa Quick Design
 ### 简介
-* Jpa Service 封装,部份CRUD进行优化.支持querydsl,只需配置maven plugin生成即可
+* Jpa Service CRUD 封装,支持querydsl开箱即用。
 ### 使用
 1. 添加依赖
      ```xml
         <dependency>
             <groupId>com.github.uinio</groupId>
             <artifactId>jpa-service-spring-boot-starter</artifactId>
-            <version>2.1.5.RELEASE</version>
+            <version>2.3.0.RELEASE</version>
         </dependency>
       ```
 ----------   
@@ -87,6 +87,24 @@ class MainApplicationTests {
 
        //...
     }
+}
+```
+-------
+> querydsl 开箱即用
+```java
+@SpringBootTest
+class MainApplicationTests {
+
+    @Autowired
+    private JPAQueryFactory jpaQueryFactory;
+
+    @Test
+    void contextLoads() {
+       QContact contact = QContact.contact;
+       jpaQueryFactory.update(contact).set(user.name,"test")
+        .where(contact.id.eq(1)).execute();
+    }
+
 }
 ```
 

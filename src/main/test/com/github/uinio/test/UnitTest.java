@@ -1,11 +1,10 @@
 package com.github.uinio.test;
 
-import com.github.uinio.jpa.utils.IdFieldUtils;
+import com.github.uinio.jpa.utils.KeyUtils;
 import com.github.uinio.test.domain.Person;
 import com.github.uinio.test.domain.User;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 
 public class UnitTest {
@@ -30,8 +29,8 @@ public class UnitTest {
 //        person1.getUsers().forEach(System.out::println);
 
         // get id test
-        Optional<String> idFieldName = IdFieldUtils.getIdFieldName(person.getClass());
-        idFieldName.flatMap(field -> IdFieldUtils.getIdFieldValue(person, field)).ifPresent(System.out::println);
+        System.out.println(KeyUtils.fieldName(person.getClass()));
+        System.out.println(KeyUtils.fieldValue(person));
 
         //get all properties
 //        EntityUtils.getProperties(person).forEach((key, value) -> System.out.println(key + " : " + value));

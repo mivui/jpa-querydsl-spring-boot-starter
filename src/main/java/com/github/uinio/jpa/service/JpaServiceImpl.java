@@ -1,7 +1,8 @@
 package com.github.uinio.jpa.service;
 
-import com.github.uinio.jpa.exception.JpaServiceException;
 import com.github.uinio.jpa.utils.EntityUtils;
+import com.github.uinio.jpa.utils.KeyUtils;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,9 +23,6 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static com.github.uinio.jpa.utils.IdFieldUtils.getIdFieldName;
-import static com.github.uinio.jpa.utils.IdFieldUtils.getIdFieldValue;
 
 
 /**
@@ -39,21 +38,29 @@ public abstract class JpaServiceImpl<T, ID> implements JpaService<T, ID> {
 
     private final Class<T> clazz;
 
+    @SuppressWarnings("unchecked")
     public JpaServiceImpl() {
         ParameterizedType parameterizedType = ( ParameterizedType ) this.getClass().getGenericSuperclass();
         Type[] types = parameterizedType.getActualTypeArguments();
         clazz = ( Class<T> ) types[0];
     }
 
+    @PersistenceContext
+    protected EntityManager entityManager;
+
     private JpaRepository<T, ID> jpaRepository;
 
+    protected JPAQueryFactory jpaQueryFactory;
+
     @Autowired
-    public void setJpaRepository(final JpaRepository<T, ID> jpaRepository) {
+    public void setJpaRepository(JpaRepository<T, ID> jpaRepository) {
         this.jpaRepository = jpaRepository;
     }
 
-    @PersistenceContext
-    protected EntityManager entityManager;
+    @Autowired
+    public void setJpaQueryFactory(JPAQueryFactory jpaQueryFactory) {
+        this.jpaQueryFactory = jpaQueryFactory;
+    }
 
     @Override
     @Transactional
@@ -64,55 +71,39 @@ public abstract class JpaServiceImpl<T, ID> implements JpaService<T, ID> {
     @Override
     @Transactional
     public T save(T entity) {
-        if (Objects.nonNull(entity)) {
-            return jpaRepository.save(entity);
-        }
-        return null;
+        Assert.notNull(entity, "The given entity must not be null!");
+        return jpaRepository.save(entity);
     }
 
     @Override
     @Transactional
-    public List<T> saveAll(Iterable<T> entities) {
-        if (Objects.nonNull(entities) && entities.iterator().hasNext()) {
-            return jpaRepository.saveAll(entities);
-        }
-        return null;
+    public List<T> saveAll(Collection<T> entities) {
+        Assert.notEmpty(entities, "The given entities must not be null!");
+        return jpaRepository.saveAll(entities);
     }
 
     @Override
     @Transactional
-    public int update(T entity) {
-        if (Objects.nonNull(entity)) {
-            Optional<String> idFieldName = getIdFieldName(clazz);
-            if (idFieldName.isPresent()) {
-                CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-                CriteriaUpdate<T> update = builder.createCriteriaUpdate(clazz);
-                Root<T> root = update.from(clazz);
-                Map<String, Object> properties = EntityUtils.getProperties(entity);
-                properties.forEach((name, value) -> update.set(root.get(name), value));
-                Optional<Object> idFieldValue = getIdFieldValue(entity, idFieldName.get());
-                if (idFieldValue.isPresent()) {
-                    update.where(builder.equal(root.get(idFieldName.get()), idFieldValue.get()));
-                    return entityManager.createQuery(update).executeUpdate();
-                } else {
-                    throw new JpaServiceException("The primary key cannot be null");
-                }
-
-            }
-        }
-        return 0;
+    public Integer update(T entity) {
+        String idFieldName = KeyUtils.fieldName(clazz);
+        Assert.notNull(idFieldName, "the current table cannot get the (javax.persistence.Id) primary key !");
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaUpdate<T> update = builder.createCriteriaUpdate(clazz);
+        Root<T> root = update.from(clazz);
+        Map<String, Object> properties = EntityUtils.getProperties(entity);
+        properties.forEach((name, value) -> update.set(root.get(name), value));
+        Object fieldValue = KeyUtils.fieldValue(entity);
+        Assert.notNull(fieldValue, "The given entity must not be null!");
+        update.where(builder.equal(root.get(idFieldName), fieldValue));
+        return entityManager.createQuery(update).executeUpdate();
     }
 
     @Override
     @Transactional
-    public int updateAll(List<T> entities) {
-        int count = 0;
-        if (Objects.nonNull(entities) && !entities.isEmpty()) {
-            for (T entity : entities) {
-                count += this.update(entity);
-            }
-        }
-        return count;
+    public Integer updateAll(Collection<T> entities) {
+        Assert.notEmpty(entities, "The given entities must not be null!");
+        entities.forEach(this::update);
+        return entities.size();
     }
 
     @Override
@@ -125,30 +116,22 @@ public abstract class JpaServiceImpl<T, ID> implements JpaService<T, ID> {
     @Override
     @Transactional
     public void deleteById(ID id) {
-        if (Objects.isNull(id)) {
-            throw new JpaServiceException("The primary key cannot be null");
-        } else {
-            jpaRepository.deleteById(id);
-        }
+        Assert.notNull(id, "The given id must not be null!");
+        jpaRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public int deleteByIds(ID[] ids) {
-        if (Objects.isNull(ids)) {
-            throw new JpaServiceException("The primary key cannot be null");
-        } else {
-            Optional<String> idFieldName = getIdFieldName(clazz);
-            if (idFieldName.isPresent()) {
-                CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-                CriteriaDelete<T> delete = builder.createCriteriaDelete(clazz);
-                Root<T> root = delete.from(clazz);
-                List<ID> idList = Stream.of(ids).collect(Collectors.toList());
-                delete.where(root.get(idFieldName.get()).in(idList));
-                return entityManager.createQuery(delete).executeUpdate();
-            }
-        }
-        return 0;
+        Assert.notEmpty(ids, "The given id must not be null!");
+        String idFieldName = KeyUtils.fieldName(clazz);
+        Assert.notNull(idFieldName, "the current table cannot get the (javax.persistence.Id) primary key !");
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaDelete<T> delete = builder.createCriteriaDelete(clazz);
+        Root<T> root = delete.from(clazz);
+        List<ID> idList = Stream.of(ids).collect(Collectors.toList());
+        delete.where(root.get(idFieldName).in(idList));
+        return entityManager.createQuery(delete).executeUpdate();
     }
 
     @Override
@@ -162,7 +145,7 @@ public abstract class JpaServiceImpl<T, ID> implements JpaService<T, ID> {
     }
 
     @Override
-    public List<T> findAllById(Iterable<ID> ids) {
+    public List<T> findAllById(Collection<ID> ids) {
         return jpaRepository.findAllById(ids);
     }
 

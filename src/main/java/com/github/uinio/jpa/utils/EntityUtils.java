@@ -18,6 +18,12 @@ public class EntityUtils {
     private EntityUtils() {
     }
 
+    /**
+     * get single table non empty attributes
+     *
+     * @param entity object
+     * @return map
+     */
     public static <T> Map<String, Object> getProperties(T entity) {
         BeanWrapper wrapper = new BeanWrapperImpl(entity);
         Map<String, Object> map = new HashMap<>();

@@ -1,15 +1,15 @@
 # jpa-service-spring-boot-starter
-[中文](./ZH_CN.md) | [English](./README.md)
+[中文](./ZH_CN.md) | English
 * Jpa Quick Design
 ### Introduction
-* jpa service package some crud optimization.Support querydsl, just configure maven plugin generation.
+* Jpa Service CRUD package, support querydsl out of the box.
 ### use
 1. Add dependency
      ```xml
         <dependency>
             <groupId>com.github.uinio</groupId>
             <artifactId>jpa-service-spring-boot-starter</artifactId>
-            <version>2.1.5.RELEASE</version>
+            <version>2.3.0.RELEASE</version>
         </dependency>
       ```
 ----------   
@@ -87,6 +87,24 @@ class MainApplicationTests {
 
        //...
     }
+}
+```
+-------
+> querydsl out of the box
+```java
+@SpringBootTest
+class MainApplicationTests {
+
+    @Autowired
+    private JPAQueryFactory jpaQueryFactory;
+
+    @Test
+    void contextLoads() {
+       QContact contact = QContact.contact;
+       jpaQueryFactory.update(contact).set(user.name,"test")
+        .where(contact.id.eq(1)).execute();
+    }
+
 }
 ```
 
