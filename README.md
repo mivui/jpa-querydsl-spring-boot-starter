@@ -101,7 +101,7 @@ class MainApplicationTests {
     @Test
     void contextLoads() {
        QContact contact = QContact.contact;
-       jpaQueryFactory.update(contact).set(user.name,"test")
+       jpaQueryFactory.update(contact).set(contact.name,"test")
         .where(contact.id.eq(1)).execute();
     }
 
