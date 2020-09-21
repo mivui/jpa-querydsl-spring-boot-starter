@@ -21,6 +21,7 @@ import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -84,7 +85,7 @@ public abstract class JpaServiceImpl<T, ID> implements JpaService<T, ID> {
 
     @Override
     @Transactional
-    public Integer update(T entity) {
+    public int update(T entity) {
         String idFieldName = KeyUtils.fieldName(clazz);
         Assert.notNull(idFieldName, "the current table cannot get the (javax.persistence.Id) primary key !");
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
@@ -100,10 +101,14 @@ public abstract class JpaServiceImpl<T, ID> implements JpaService<T, ID> {
 
     @Override
     @Transactional
-    public Integer updateAll(Collection<T> entities) {
+    public int updateAll(Collection<T> entities) {
+        AtomicInteger count = new AtomicInteger(0);
         Assert.notEmpty(entities, "The given entities must not be null!");
-        entities.forEach(this::update);
-        return entities.size();
+        entities.forEach(o -> {
+            count.getAndIncrement();
+            this.update(o);
+        });
+        return count.get();
     }
 
     @Override

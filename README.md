@@ -9,7 +9,7 @@
         <dependency>
             <groupId>com.github.uinio</groupId>
             <artifactId>jpa-service-spring-boot-starter</artifactId>
-            <version>2.3.0.RELEASE</version>
+            <version>2.3.1.RELEASE</version>
         </dependency>
       ```
 ----------   

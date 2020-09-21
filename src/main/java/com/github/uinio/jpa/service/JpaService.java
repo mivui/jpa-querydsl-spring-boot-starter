@@ -40,13 +40,13 @@ public interface JpaService<T, ID> {
      * Update based on primary key Only support single table update
      * @return
      */
-    Integer update(T entity);
+    int update(T entity);
 
     /**
      * updateAll Only support single table update
      * @return
      */
-    Integer updateAll(Collection<T> entities);
+    int updateAll(Collection<T> entities);
 
     /**
      * (non-Javadoc)
