@@ -1,5 +1,5 @@
 # jpa-service-spring-boot-starter
-[中文](./ZH_CN.md) | English
+ English | [中文](./ZH_CN.md)
 * Jpa Quick Design
 ### Introduction
 * Jpa Service CRUD package, support querydsl out of the box.
