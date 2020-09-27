@@ -1,6 +1,7 @@
 # jpa-service-spring-boot-starter
 中文 | [English](./README.md)
 * Jpa Quick Design
+* 支持spring boot 2.1.x 以上的版本(包含2.1.x)
 ### 简介
 * Jpa Service CRUD 封装,支持querydsl开箱即用。
 ### 使用
