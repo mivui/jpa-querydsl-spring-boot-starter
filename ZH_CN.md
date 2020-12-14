@@ -1,4 +1,4 @@
-# jpa-service-spring-boot-starter
+# jpa-querydsl-spring-boot-starter
 中文 | [English](./README.md)
 * Jpa Quick Design
 * 支持spring boot 2.1.x 以上的版本(包含2.1.x)
@@ -9,8 +9,8 @@
      ```xml
         <dependency>
             <groupId>com.github.uinio</groupId>
-            <artifactId>jpa-service-spring-boot-starter</artifactId>
-            <version>2.4.5</version>
+            <artifactId>jpa-querydsl-spring-boot-starter</artifactId>
+            <version>2.4.1</version>
         </dependency>
       ```
 ----------   

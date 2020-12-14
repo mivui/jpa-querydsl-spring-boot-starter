@@ -5,15 +5,15 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.0</version>
+        <version>2.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.github.uinio</groupId>
-    <artifactId>jpa-service-spring-boot-starter</artifactId>
-    <version>2.4.5</version>
-    <name>jpa-service-spring-boot-starter</name>
-    <description>jpa-service-spring-boot-starter</description>
-    <url>https://github.com/uinio/jpa-service-spring-boot-starter</url>
+    <artifactId>jpa-querydsl-spring-boot-starter</artifactId>
+    <version>2.4.1</version>
+    <name>jpa-querydsl-spring-boot-starter</name>
+    <description>jpa-querydsl-spring-boot-starter</description>
+    <url>https://github.com/uinio/jpa-querydsl-spring-boot-starter</url>
 
     <licenses>
         <license>
@@ -30,13 +30,13 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:uinio/jpa-service-spring-boot-starter.git</connection>
-        <developerConnection>scm:git:git@github.com:uinio/jpa-service-spring-boot-starter.git</developerConnection>
-        <url>git@github.com:uinio/jpa-service-spring-boot-starter.git</url>
+        <connection>scm:git:git@github.com:uinio/jpa-querydsl-spring-boot-starter.git</connection>
+        <developerConnection>scm:git:git@github.com:uinio/jpa-querydsl-spring-boot-starter.git</developerConnection>
+        <url>git@github.com:uinio/jpa-querydsl-spring-boot-starter.git</url>
     </scm>
     <issueManagement>
         <system>Github Issue</system>
-        <url>https://github.com/uinio/jpa-service-spring-boot-starter/issues</url>
+        <url>https://github.com/uinio/jpa-querydsl-spring-boot-starter/issues</url>
     </issueManagement>
 
     <properties>
