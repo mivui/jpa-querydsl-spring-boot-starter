@@ -154,6 +154,8 @@ class MainApplicationTests {
 </build>
 ```
 
+* mvn compile generate query class
+
 ```java
 
 @SpringBootTest

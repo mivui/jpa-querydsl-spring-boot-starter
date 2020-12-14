@@ -127,7 +127,7 @@ class MainApplicationTests {
         </plugins>
     </build>
 ```
-
+* mvn compile 生成query类
 ```java
 @SpringBootTest
 class MainApplicationTests {
