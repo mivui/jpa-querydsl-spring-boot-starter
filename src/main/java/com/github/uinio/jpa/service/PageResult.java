@@ -1,7 +1,7 @@
 package com.github.uinio.jpa.service;
 
 /**
- * @author LvXiaoBu
+ * @author uinio
  */
 public enum PageResult {
 

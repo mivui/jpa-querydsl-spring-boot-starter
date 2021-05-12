@@ -31,7 +31,7 @@ import java.util.stream.Stream;
  *
  * @param <T>  entity
  * @param <ID> Primary key Type
- * @author LvXiaoBu
+ * @author uinio
  * @see JpaService
  */
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true, rollbackFor = Exception.class)

@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * @param <T>  record
  * @param <ID> Primary key Type
- * @author LvXiaoBu
+ * @author uinio
  */
 public interface JpaService<T, ID> {
 
