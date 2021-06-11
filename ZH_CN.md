@@ -10,7 +10,7 @@
         <dependency>
             <groupId>com.github.uinio</groupId>
             <artifactId>jpa-querydsl-spring-boot-starter</artifactId>
-            <version>2.4.1</version>
+            <version>2.5.1</version>
         </dependency>
       ```
 ----------   
